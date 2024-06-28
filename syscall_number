@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 1 ]
+then
+    NR="$(printf SYS_$1 | gcc -std=c17 -include sys/syscall.h -E - | tail -n 1)"
+    regex='^[0-9]+$'
+    if ! [[ $NR =~ $regex ]]
+    then
+        echo "Not a valid syscall"
+    else
+        echo $NR
+    fi
+else
+    echo "No or too many arguments supplied"
+fi
+
